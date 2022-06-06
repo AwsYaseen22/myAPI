@@ -12,7 +12,7 @@ app.use(cors());
 // using the secrets environment variable
 console.log(process.env.SECRET);
 
-let categories = ["Pantry", "Refrigerator", "Freezer", "Spices and Condiments"];
+let categories = ["pantry", "refrigerator", "freezer", "spices and condiments"];
 let items = [
   { id: 1, category: categories[0], name: "rice" },
   { id: 2, category: categories[0], name: "pasta" },
@@ -47,7 +47,7 @@ app.get("/api/categories", (req, res) => {
 });
 
 app.get("/api/items-by-category/:category", (req, res) => {
-  const cat = req.params.category;
+  const cat = req.params.category.toLowerCase();
   const filtered = items.filter((e) => e.category === cat);
   if (filtered.length > 0) {
     res.json(filtered);
