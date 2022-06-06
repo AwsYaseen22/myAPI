@@ -46,6 +46,16 @@ app.get("/api/categories", (req, res) => {
   res.json(categories);
 });
 
+app.get("/api/items-by-category/:category", (req, res) => {
+  const cat = req.params.category;
+  const filtered = items.filter((e) => e.category === cat);
+  if (filtered.length > 0) {
+    res.json(filtered);
+  } else {
+    res.status(404).end("Please check the requested category name...");
+  }
+});
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
