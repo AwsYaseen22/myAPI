@@ -24,9 +24,6 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     db = client.db(dbName);
   })
   .catch((err) => console.log(err));
-// console.log(db);
-// const categories = db.collection("categories");
-// const items = db.collection("items");
 
 // Routes
 // Main page (containing documentation)
@@ -82,7 +79,6 @@ app.get("/api/items-by-category/:category", (req, res) => {
     .find({ category: category })
     .toArray()
     .then((result) => {
-      console.log(result);
       res.json(result);
     });
 });
