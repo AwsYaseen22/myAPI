@@ -1,78 +1,93 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const { json } = require("express/lib/response");
 const PORT = process.env.PORT || 8000;
 require("./dotenv");
 
 const app = express();
 
-// connect to the DB
-const MongoClient = require("mongodb").MongoClient;
-const connectionString = process.env.DB_URL;
 // read data from frontend form
 app.use(bodyParser.urlencoded({ extended: true }));
 // to take the data from the body of raw json on postman
 app.use(bodyParser.json());
 app.use(cors());
 
-MongoClient.connect(connectionString)
+// connect to the DB
+const MongoClient = require("mongodb").MongoClient;
+const connectionString = process.env.DB_URL;
+const dbName = "house-consumed-stuff";
+
+let db;
+MongoClient.connect(connectionString, { useUnifiedTopology: true })
   .then((client) => {
-    console.log("connected to db");
-    const db = client.db("house-consumed-stuff");
-    const categories = db.collection("categories");
-    const items = db.collection("items");
-
-    // Routes
-    app.get("/api", (req, res) => {
-      // res.json(items);
-      items
-        .find()
-        .toArray()
-        .then((result) => {
-          db.listCollections()
-            .toArray()
-            .then((data) => console.log(data));
-          res.json(result);
-        })
-        .catch((err) => console.log(err));
-    });
-
-    app.get("/api/categories", (req, res) => {
-      categories
-        .find()
-        .toArray()
-        .then((collections) => res.json(collections));
-    });
-
-    app.post("/api/categories", (req, res) => {
-      console.log(req.body);
-      categories
-        .insertOne(req.body)
-        .then((result) => {
-          console.log(result);
-          res.json(result);
-        })
-        .catch((err) => console.log(err));
-    });
-
-    // app.get("/api/items-by-category/:category", (req, res) => {
-    //   const cat = req.params.category.toLowerCase();
-    //   const filtered = items.filter((e) => e.category === cat);
-    //   if (filtered.length > 0) {
-    //     res.json(filtered);
-    //   } else {
-    //     res.status(404).end("Please check the requested category name...");
-    //   }
-    // });
-
-    // app.get("/", (req, res) => {
-    //   res.sendFile(__dirname + "/index.html");
-    // });
-
-    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+    console.log(`connected to ${dbName} DB`);
+    db = client.db(dbName);
   })
   .catch((err) => console.log(err));
+// console.log(db);
+// const categories = db.collection("categories");
+// const items = db.collection("items");
+
+// Routes
+// Main page (containing documentation)
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+// List all items
+app.get("/api/items", (req, res) => {
+  db.collection("items")
+    .find()
+    .toArray()
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => console.log(err));
+});
+
+// Add item to the itms list
+app.post("/api/items", (req, res) => {
+  console.log(req.body);
+  db.collection("items")
+    .insertOne(req.body)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => console.log(err));
+});
+
+// List all categories
+app.get("/api/categories", (req, res) => {
+  db.collection("categories")
+    .find()
+    .toArray()
+    .then((categories) => res.json(categories));
+});
+
+// Add new category
+app.post("/api/categories", (req, res) => {
+  console.log(req.body);
+  db.collection("categories")
+    .insertOne(req.body)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => console.log(err));
+});
+
+// List all items filtered by category:
+app.get("/api/items-by-category/:category", (req, res) => {
+  const category = req.params.category.toLowerCase();
+  db.collection("items")
+    .find({ category: category })
+    .toArray()
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    });
+});
+
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 // to handle data from frontend form via req.body
 
 // // using the secrets environment variable
