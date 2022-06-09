@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
+// ###################### Items Collection ######################
 // List all items
 app.get("/api/items", (req, res) => {
   db.collection("items")
@@ -42,34 +43,57 @@ app.get("/api/items", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Get specific item by name
+app.get("/api/items/:name", (req, res) => {
+  const itemName = req.params.name;
+  db.collection("items")
+    .find({ name: itemName })
+    .toArray()
+    .then((result) => {
+      res.json(result);
+    });
+});
+
 // Add item to the itms list
 app.post("/api/items", (req, res) => {
   console.log(req.body);
-  db.collection("items")
-    .insertOne(req.body)
+  db.collection("categories")
+    .find()
+    .toArray()
     .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => console.log(err));
+      let categoriesList = result.map((cat) => cat.name);
+      if (categoriesList.includes(req.body.category)) {
+        db.collection("items")
+          .find()
+          .toArray()
+          .then((allItems) => {
+            let itemsAll = allItems.map((e) => e.name);
+            if (!itemsAll.includes(req.body.name)) {
+              db.collection("items")
+                .insertOne(req.body)
+                .then((result) => {
+                  res.json(result);
+                })
+                .catch((err) => console.log(err));
+            } else {
+              res.send("Item already listed!");
+            }
+          });
+      } else {
+        res.send(
+          "Please check the category name or add new category if needed!"
+        );
+      }
+    });
 });
 
+// ###################### Categories Collection ######################
 // List all categories
 app.get("/api/categories", (req, res) => {
   db.collection("categories")
     .find()
     .toArray()
     .then((categories) => res.json(categories));
-});
-
-// Add new category
-app.post("/api/categories", (req, res) => {
-  console.log(req.body);
-  db.collection("categories")
-    .insertOne(req.body)
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => console.log(err));
 });
 
 // List all items filtered by category:
@@ -80,6 +104,29 @@ app.get("/api/items-by-category/:category", (req, res) => {
     .toArray()
     .then((result) => {
       res.json(result);
+    });
+});
+
+// Add new category
+app.post("/api/categories", (req, res) => {
+  console.log(req.body);
+  db.collection("categories")
+    .find()
+    .toArray()
+    .then((result) => {
+      let allCategories = result.map((e) => e.name);
+      if (!allCategories.includes(req.body.name)) {
+        db.collection("categories")
+          .insertOne(req.body)
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        res.send(
+          "Please double check the category name as it is already listed!"
+        );
+      }
     });
 });
 
