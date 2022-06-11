@@ -6,40 +6,177 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home consumed stuff API</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>
         <h1>Home consumed stuff API</h1>
         <h3>To use the api please head to the following url:</h3>
         <ul>
+            <!-- Main page -->
             <li>Main page (this page):</li>
-            <a href="https://consumed-stuff-api.herokuapp.com">https://consumed-stuff-api.herokuapp.com</a>
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com">https://consumed-stuff-api.herokuapp.com</a>
+                </li>
+                <li><span>Method: </span><span class="details">get</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+
+                </ul>
+            </ul>
             <br><br>
+
+            <!-- All items -->
             <li>List all items:</li>
-            <a href="https://consumed-stuff-api.herokuapp.com/api">https://consumed-stuff-api.herokuapp.com/api</a>
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com/api/items">https://consumed-stuff-api.herokuapp.com/api/items</a>
+                </li>
+                <li><span>Method: </span><span class="details">get</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+
+                </ul>
+            </ul>
+
             <br><br>
+
+            <!-- Item by name -->
             <li>Get specific item by name:</li>
-            <a
-                href="https://consumed-stuff-api.herokuapp.com/api/items/Milk">https://consumed-stuff-api.herokuapp.com/api/items/Milk</a>
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com/api/items/">https://consumed-stuff-api.herokuapp.com/api/items/</a>
+                </li>
+                <li><span>Method: </span><span class="details">get</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">String</span></li>
+                    <li><span>Sample: </span><span class="details">Milk</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+
+                </ul>
+            </ul>
+
             <br><br>
-            <li>Add item to the itms list:</li>
-            <a href="https://consumed-stuff-api.herokuapp.com/api/items">Post to the url with the data at the body:
-                https://consumed-stuff-api.herokuapp.com/api/items</a>
-            <br><br>
 
-
-
-            <li>List all categories</li>
-            <a
-                href="https://consumed-stuff-api.herokuapp.com/api/categories">https://consumed-stuff-api.herokuapp.com/api/categories</a>
-
-            <br><br>
+            <!-- list items filtered by category -->
             <li>List all items filtered by category:</li>
-            <a
-                href="https://consumed-stuff-api.herokuapp.com/api/items-by-category/:category">https://consumed-stuff-api.herokuapp.com/api/items-by-category/:category</a>
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com/api/items-by-category/">https://consumed-stuff-api.herokuapp.com/api/items-by-category/</a>
+                </li>
+                <li><span>Method: </span><span class="details">get</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">String</span></li>
+                    <li><span>Sample: </span><span class="details">pantry</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+
+                </ul>
+            </ul>
+
+            <br><br>
+
+            <!-- Add new item -->
+            <li>Add item to the items list:</li>
+            <ul>
+                <li><span>Link: </span><a href="https://consumed-stuff-api.herokuapp.com/api/items">Post to the url with
+                        the data at the body:
+                        https://consumed-stuff-api.herokuapp.com/api/items</a>
+                </li>
+                <li><span>Method: </span><span class="details">post</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">JSON</span></li>
+                    <li><span>Sample: </span><span class="details">
+                            {
+                            "name": "Milk",
+                            "category": "pantry",
+                            "minQty": "0",
+                            "qty": 1,
+                            "shopFrom": []
+                            }
+                        </span></li>
+
+                </ul>
+            </ul>
+
+            <br><br>
+
+            <!-- List all categories -->
+            <li>List all categories</li>
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com/api/categories">https://consumed-stuff-api.herokuapp.com/api/categories</a>
+                </li>
+                <li><span>Method: </span><span class="details">get</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+                </ul>
+            </ul>
+
+            <br><br>
+
+
+            <!-- Add new category -->
             <li>Add new category:</li>
-            <a href="https://consumed-stuff-api.herokuapp.com/api/categories">Post to the url with data in the body with
-                json format: https://consumed-stuff-api.herokuapp.com/api/categories</a>
+
+            <ul>
+                <li><span>Link: </span><a
+                        href="https://consumed-stuff-api.herokuapp.com/api/categories">https://consumed-stuff-api.herokuapp.com/api/categories</a>
+                </li>
+                <li><span>Method: </span><span class="details">post</span></li>
+                <li><span>Parameter: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">None</span></li>
+                    <li><span>Sample: </span><span class="details">None</span></li>
+                </ul>
+                <li><span>Body: </span></li>
+                <ul>
+                    <li><span>Type: </span><span class="details">JSON</span></li>
+                    <li><span>Sample: </span><span class="details">
+                            {
+                            "name": "pantry"
+                            }
+                        </span></li>
+                </ul>
+            </ul>
 
         </ul>
     </body>

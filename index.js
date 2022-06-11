@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // to take the data from the body of raw json on postman
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static("public"));
 
 // connect to the DB
 const MongoClient = require("mongodb").MongoClient;
